@@ -9,16 +9,11 @@ class Wio(db.Model):
     code = db.Column(db.String(45), nullable=False)
 
 @staticmethod
-def to_json(self):
+def to_json_slice(self):
     return{
-        "id" : self.id,
-        "wio" : self.wio,
-        "macaddress" : self.macaddress,
-        "code" : self.code
+        "wio" : self.wio
     }
     
-
-
 class WioData(db.Model):
     __tablename__ = 'wiodata'
     id = db.Column(db.Integer, primary_key=True)
