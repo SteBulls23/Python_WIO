@@ -1,6 +1,4 @@
-from flask import Blueprint, request
-from src.app import db
-from src.app.models import Wio, WioData
+from flask import Blueprint
 from http import HTTPStatus
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -15,7 +13,7 @@ def auth():
     if wio is None:
         return "Wio non trovato", HTTPStatus.UNAUTHORIZED
     additional_claims = {"macaddress" : wio.macaddress}
-    
+
     return {"access-token" : token}
 
 
