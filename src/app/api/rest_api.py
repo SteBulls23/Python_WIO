@@ -13,7 +13,8 @@ def auth():
     if wio is None:
         return "Wio non trovato", HTTPStatus.UNAUTHORIZED
     additional_claims = {"macaddress" : wio.macaddress}
-
+    token = create_access_token(identity = wio.id,
+        additional_claims = additional_claims)
     return {"access-token" : token}
 
 
