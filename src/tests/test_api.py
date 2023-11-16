@@ -5,12 +5,11 @@ import uuid
 
 
 def test_register_wio(client,db):
-    ma = uuid.uuid1()
-    resp = util.register_wio(client,'wio1',ma,'code1')
+    resp = util.register_wio(client,'wio1',"xx-yy-zz",'code1')
     assert resp.status_code == HTTPStatus.CREATED
     json = resp.get_json()
     assert json['wio'] == 'wio1'
-    assert json['macaddress'] == ma.__str__()
+    assert json['macaddress'] == "xx-yy-zz"
     assert json['code'] == 'code1'
     assert json['id'] is not None
 
