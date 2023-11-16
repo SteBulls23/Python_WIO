@@ -4,7 +4,7 @@ from . import util
 import uuid
 
 
-def test_register_wio(client,db):
+def test_register_wio(client, db):
     resp = util.register_wio(client,'wio1',"xx-yy-zz",'code1')
     assert resp.status_code == HTTPStatus.CREATED
     json = resp.get_json()
@@ -75,3 +75,7 @@ def test_stats(client,db):
     assert json[0]['min'] == 36
     assert json[0]['max'] == 38
     assert json[0]['avg'] == 37
+
+def test_register_wio_failed(client,db):
+    resp = util.register_wio(client)
+    assert resp.status_code == HTTPStatus.BAD_REQUEST

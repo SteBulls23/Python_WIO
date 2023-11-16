@@ -1,5 +1,6 @@
 from datetime import datetime
 from src.app import db
+from src.app.api.exception import ValidationError
 
 class Wio(db.Model):
     __tablename__ = 'wio'
@@ -10,7 +11,16 @@ class Wio(db.Model):
 
     @staticmethod
     def from_json(json):
-        pass 
+        if json.get("wio") is None:
+            raise ValidationError("wio is empty")
+        if json.get("macaddress") is None:
+            raise ValidationError("macaddress is empty")
+        if json.get("code") is None:
+            raise ValidationError("code is empty")
+        return Wio(wio=json.get('wio'),
+        macaddress=json.get('macaddress'),
+        code=json.get('code'))
+        
 
     def to_json(self):
         return {
