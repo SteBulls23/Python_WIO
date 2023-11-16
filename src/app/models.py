@@ -8,11 +8,22 @@ class Wio(db.Model):
     macaddress = db.Column(db.String(45), unique=True)
     code = db.Column(db.String(45), nullable=False)
 
-@staticmethod
-def to_json_slice(self):
-    return{
-        "wio" : self.wio
-    }
+    @staticmethod
+    def from_json(json):
+        pass 
+
+    def to_json(self):
+        return {
+            'id':self.id,
+            'wio':self.wio,
+            'macaddress':self.macaddress,
+            'code': self.code
+        }
+
+    def to_json_slice(self):
+        return {
+            'wio':self.wio
+        }
     
 class WioData(db.Model):
     __tablename__ = 'wiodata'
@@ -22,10 +33,10 @@ class WioData(db.Model):
     id_wio = db.Column(db.Integer, db.ForeignKey('wio.id'), nullable=False)
     created_on = db.Column(db.DateTime, default=datetime.now()) 
 
-def to_json(self):
-    return{
-        "value" : self.value,
-        "type" : self.type,
-        "wio_id" : self.id
-    }
+    def to_json(self):
+        return {
+            'value':self.value,
+            'type': self.type,
+            'wio_id': self.id_wio
+        }
     

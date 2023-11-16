@@ -1,3 +1,4 @@
+import os
 class Config:
     SECRET_KEY = "my secret..."
     TESTING = False
@@ -5,14 +6,17 @@ class Config:
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or "sqlite://"
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://root:root@localhost:3306/wioterminal"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+        "mysql+mysqlconnector://root:root@localhost:3306/wioterminal"
     
 class ProductionConfig(Config):
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('PROD_DATABASE_URL') or \
+        "mysql+mysqlconnector://root:root@localhost:3306/wioterminal"
 
 config = {
     "testing" : TestingConfig,

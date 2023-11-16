@@ -1,7 +1,5 @@
 from flask import Flask
 from .config import config
-from src.app.main.views import main
-from src.app.api.rest_api import api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 
@@ -16,6 +14,8 @@ def create_app(config_name):
     app.json.sort_keys = False
     db.init_app(app)
     jwt.init_app(app)
+    from src.app.main.views import main
     app.register_blueprint(main, url_prefix = "/main")
+    from src.app.api.rest_api import api
     app.register_blueprint(api, url_prefix = "/api")
     return app
